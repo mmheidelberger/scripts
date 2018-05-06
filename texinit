@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+
+#This script creates a blank LaTeX document with specified parameters (the first letter of the document class, and the file path).  This comes in handy if you use vim-latex-livepreview to start a new document.
+
+import argparse
+document_classes = {'a' : 'article',
+                    'r' : 'report',
+                    'b' : 'book',
+                    'm' : 'memoir',
+                    'l' : 'letter',
+                    'b' : 'beamer',
+                    'i' : 'IEEEtran',
+                    'p' : 'proc',
+                    's' : 'slides'
+                    }
+
+if (__name__=='__main__'):
+    arg_parser=argparse.ArgumentParser()
+    arg_parser.add_argument("-c", help="Specifies the class of the LaTeX document")
+    arg_parser.add_argument("-f", help="Output file")
+    arguements = arg_parser.parse_args()
+    if arguements.c != None:
+        output_string = "\documentclass{" + document_classes[arguements.c] + "}\n\n"
+        output_string += r"\begin{document}" + "\n\n"
+        output_string += r"\end{document}" + "\n"
+        texdocfile = arguements.f
+        try:
+            texdocaction = open(texdocfile, 'w')
+            texdocaction.write(output_string)
+            print(texdocfile + " created successfully")
+        except:
+            print("file not written:" + texdocfile)
